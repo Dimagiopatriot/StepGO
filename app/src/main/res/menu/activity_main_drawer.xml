@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:checked="true"
+            android:id="@+id/nav_walking"
+            android:icon="@drawable/ic_walk_option"
+            android:title="Your steps" />
+        <item
+            android:id="@+id/nav_statistic"
+            android:icon="@drawable/ic_statistic_option"
+            android:title="Statistic" />
+        <item
+            android:id="@+id/nav_music"
+            android:icon="@drawable/ic_music_option"
+            android:title="Music" />
+        <item
+            android:id="@+id/nav_recipes"
+            android:icon="@drawable/ic_recipe_option"
+            android:title="Recipes" />
+    </group>
+
+</menu>

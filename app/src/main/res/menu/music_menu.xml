@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_back"
+        android:icon="@drawable/ic_back"
+        android:orderInCategory="1"
+        android:title="@string/back"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/action_end"
+        android:icon="@drawable/ic_music_end"
+        android:orderInCategory="2"
+        android:title="@string/end"
+        app:showAsAction="always" />
+</menu>

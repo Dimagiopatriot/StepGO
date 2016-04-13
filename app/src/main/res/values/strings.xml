@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">StepGO</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="percent">0</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Steps</string>
+    <string name="graphic_description">This graph shows the number of steps, which you have done during the week.
+        You can keep fit yourself analyzing your step graphic!</string>
+    <string name="first_recipe">Heat oil in a Dutch oven over medium heat. Saute garlic, onion, bell pepper, parsley, chili powder, cumin, paprika, turmeric, salt and pepper, until onions are tender. Stir in kidney beans and some of the reserved liquid until desired consistency. Stir in tomato paste and hot sauce.
+    </string>
+    <string name="end">End</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="back">Back</string>
+</resources>
