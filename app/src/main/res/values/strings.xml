@@ -15,4 +15,11 @@
     <string name="end">End</string>
     <string name="shuffle">Shuffle</string>
     <string name="back">Back</string>
+
+   <!-- Status strings -->
+    <string name="work_harder">You should work harder!</string>
+    <string name="well_done">Well done! But you can better!</string>
+    <string name="such_sportsman">Such a sportsman! Do it again!</string>
+    <string name="full_of_health">I can`t believe it! You are a full of health.</string>
+    <string name="monster">MONSTER!!!</string>
 </resources>

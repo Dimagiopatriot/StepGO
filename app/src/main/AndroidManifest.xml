@@ -3,7 +3,6 @@
     package="com.stepgo.android.stepgo">
 
     <uses-feature android:name="android.hardware.sensor.stepcounter"/>
-    <uses-feature android:name="android.hardware.sensor.stepdetector"/>
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>

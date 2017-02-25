@@ -21,12 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.stepgo.android.stepgo.R;
-import com.stepgo.android.stepgo.views.BarView;
-import com.stepgo.android.stepgo.views.MusicActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import android.os.Build;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -205,26 +205,35 @@ public class MainActivity extends AppCompatActivity
 
     private void enableAccelerometerListening() {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            sensorManager.registerListener(sensorEventListener, countSensor, SensorManager.SENSOR_DELAY_UI);
+        } else
+            sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             //var`s for accelerometer
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
 
-            currentZ = z;
-            currentY = y;
-            if (Math.abs(currentY - previousY) > threshold || Math.abs(currentZ - previousZ) > threshold) {
-                numSteps++;
-                steps.setText(String.valueOf(numSteps) + " steps");
+                currentZ = z;
+                currentY = y;
+                if (Math.abs(currentY - previousY) > threshold || Math.abs(currentZ - previousZ) > threshold) {
+                    numSteps++;
+                    steps.setText(String.valueOf(numSteps) + " steps");
+                }
+
+                previousZ = z;
+                previousY = y;
+            } else {
+                steps.setText(String.valueOf(event.values[0]) + " steps");
             }
-
-            previousZ = z;
-            previousY = y;
 
             savedInstanceSteps(numSteps);
             setDayData(dataArray);
@@ -248,19 +257,19 @@ public class MainActivity extends AppCompatActivity
     //TextView under ProgressBar in your steps frame
     private void setMotivationSpeech() {
         if (progressBar.getProgress() <= 25) {
-            motivationSpeech.setText("You should work harder!");
+            motivationSpeech.setText(getResources().getString(R.string.work_harder));
         }
         if (progressBar.getProgress() > 25 && progressBar.getProgress() <= 50) {
-            motivationSpeech.setText("Well done! But you can better!");
+            motivationSpeech.setText(getResources().getString(R.string.well_done));
         }
         if (progressBar.getProgress() > 50 && progressBar.getProgress() <= 75) {
-            motivationSpeech.setText("Such a sportsman! Do it again!");
+            motivationSpeech.setText(getResources().getString(R.string.such_sportsman));
         }
         if (progressBar.getProgress() > 75 && progressBar.getProgress() < 100) {
-            motivationSpeech.setText("I can`t believe it! You are a full of health.");
+            motivationSpeech.setText(getResources().getString(R.string.full_of_health));
         }
         if (progressBar.getProgress() >= 100)
-            motivationSpeech.setText("MONSTER!!!");
+            motivationSpeech.setText(getResources().getString(R.string.monster));
     }
 
     //take calendar date
