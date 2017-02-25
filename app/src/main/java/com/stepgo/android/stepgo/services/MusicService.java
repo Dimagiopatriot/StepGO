@@ -193,9 +193,5 @@ public class MusicService extends Service implements
     public void onDestroy() {
         stopForeground(true);
     }
-
-    public void setShuffle() {
-        if (shuffle) shuffle = false;
-        else shuffle = true;
-    }
+    
 }
