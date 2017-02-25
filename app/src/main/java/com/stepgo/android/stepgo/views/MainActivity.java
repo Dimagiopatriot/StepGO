@@ -1,4 +1,4 @@
-package com.stepgo.android.stepgo;
+package com.stepgo.android.stepgo.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.stepgo.android.stepgo.music.MusicActivity;
+import com.stepgo.android.stepgo.R;
+import com.stepgo.android.stepgo.views.BarView;
+import com.stepgo.android.stepgo.views.MusicActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,16 +75,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //saving block
-        sharedPreferences=getSharedPreferences(APP_PREFERENCES,Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         //variables initializing
         isAppClosed = false;
         isMusicActivityExist = false;
         dataArray = new int[7];
-        steps = (TextView)findViewById(R.id.textView3);
-        percent = (TextView)findViewById(R.id.textView);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        motivationSpeech = (TextView)findViewById(R.id.textView4);
+        steps = (TextView) findViewById(R.id.textView3);
+        percent = (TextView) findViewById(R.id.textView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        motivationSpeech = (TextView) findViewById(R.id.textView4);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,11 +96,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //pedometer var`s initialize
-        previousY=0;
-        currentY=0;
-        previousZ=0;
-        currentZ=0;
-        threshold=5;
+        previousY = 0;
+        currentY = 0;
+        previousZ = 0;
+        currentZ = 0;
+        threshold = 5;
 
         getDate();
 
@@ -151,16 +153,16 @@ public class MainActivity extends AppCompatActivity
             recipeMain.setVisibility(View.INVISIBLE);
 
             //statistic build
-            BarView barView = (BarView)findViewById(R.id.bar_view);
+            BarView barView = (BarView) findViewById(R.id.bar_view);
             barView.setBottomTextList(strList);
             barView.setDataList(setDataList(), 10000);
         } else if (id == R.id.nav_music) {
             //checking existing of music activity
             Intent intent = new Intent(this, MusicActivity.class);
-            if (isMusicActivityExist == false){
+            if (isMusicActivityExist == false) {
                 startActivity(intent);
                 isMusicActivityExist = true;
-            }else {
+            } else {
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity
     /*
      * Arraylists of statistic name day initialize
      */
-    public void setDays(ArrayList<String> days){
+    public void setDays(ArrayList<String> days) {
         days.add("Mon");
         days.add("Tue");
         days.add("Wed");
@@ -190,23 +192,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     //Setting of dayData
-    public void setDayData(int[] dayData){
-            dayData[0] = loadInstanceSteps(APP_MONDAY_STEP);
-            dayData[1] = loadInstanceSteps(APP_TUESDAY_STEP);
-            dayData[2] = loadInstanceSteps(APP_WEDNESDAY_STEP);
-            dayData[3] = loadInstanceSteps(APP_THURSDAY_STEP);
-            dayData[4] = loadInstanceSteps(APP_FRIDAY_STEP);
-            dayData[5] = loadInstanceSteps(APP_SATURDAY_STEP);
-            dayData[6] = loadInstanceSteps(APP_SUNDAY_STEP);
+    public void setDayData(int[] dayData) {
+        dayData[0] = loadInstanceSteps(APP_MONDAY_STEP);
+        dayData[1] = loadInstanceSteps(APP_TUESDAY_STEP);
+        dayData[2] = loadInstanceSteps(APP_WEDNESDAY_STEP);
+        dayData[3] = loadInstanceSteps(APP_THURSDAY_STEP);
+        dayData[4] = loadInstanceSteps(APP_FRIDAY_STEP);
+        dayData[5] = loadInstanceSteps(APP_SATURDAY_STEP);
+        dayData[6] = loadInstanceSteps(APP_SUNDAY_STEP);
 
     }
 
-    private void enableAccelerometerListening(){
-        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+    private void enableAccelerometerListening() {
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    private SensorEventListener sensorEventListener =new SensorEventListener() {
+    private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             //var`s for accelerometer
@@ -214,15 +216,15 @@ public class MainActivity extends AppCompatActivity
             float y = event.values[1];
             float z = event.values[2];
 
-            currentZ=z;
-            currentY=y;
-            if (Math.abs(currentY-previousY)>threshold||Math.abs(currentZ-previousZ)>threshold){
+            currentZ = z;
+            currentY = y;
+            if (Math.abs(currentY - previousY) > threshold || Math.abs(currentZ - previousZ) > threshold) {
                 numSteps++;
                 steps.setText(String.valueOf(numSteps) + " steps");
             }
 
-            previousZ=z;
-            previousY=y;
+            previousZ = z;
+            previousY = y;
 
             savedInstanceSteps(numSteps);
             setDayData(dataArray);
@@ -237,68 +239,68 @@ public class MainActivity extends AppCompatActivity
     };
 
     //TextView and ProgressBar logic
-    private void setPercent(){
-        float stepPercent = (numSteps*100)/NORMAL_STEPS;
-        percent.setText(String.valueOf((int)(stepPercent))+"%");
-        progressBar.setProgress((int)(stepPercent));
+    private void setPercent() {
+        float stepPercent = (numSteps * 100) / NORMAL_STEPS;
+        percent.setText(String.valueOf((int) (stepPercent)) + "%");
+        progressBar.setProgress((int) (stepPercent));
     }
 
     //TextView under ProgressBar in your steps frame
-    private void setMotivationSpeech(){
-        if (progressBar.getProgress()<=25){
+    private void setMotivationSpeech() {
+        if (progressBar.getProgress() <= 25) {
             motivationSpeech.setText("You should work harder!");
         }
-        if (progressBar.getProgress()>25 && progressBar.getProgress()<=50){
+        if (progressBar.getProgress() > 25 && progressBar.getProgress() <= 50) {
             motivationSpeech.setText("Well done! But you can better!");
         }
-        if (progressBar.getProgress()>50 && progressBar.getProgress()<=75){
+        if (progressBar.getProgress() > 50 && progressBar.getProgress() <= 75) {
             motivationSpeech.setText("Such a sportsman! Do it again!");
         }
-        if (progressBar.getProgress()>75 && progressBar.getProgress()<100){
+        if (progressBar.getProgress() > 75 && progressBar.getProgress() < 100) {
             motivationSpeech.setText("I can`t believe it! You are a full of health.");
         }
-        if (progressBar.getProgress()>=100)
+        if (progressBar.getProgress() >= 100)
             motivationSpeech.setText("MONSTER!!!");
     }
 
     //take calendar date
-    private String getDate(){
+    private String getDate() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE");
-        return getDateString= dateFormat.format(calendar.getTime());
+        return getDateString = dateFormat.format(calendar.getTime());
     }
 
     //Because bar.setDataList() don`t take int just ArrayList<Integer>()
-    private ArrayList<Integer> setDataList(){
+    private ArrayList<Integer> setDataList() {
         ArrayList<Integer> endDataList = new ArrayList<>();
-        for (int i: dataArray){
+        for (int i : dataArray) {
             endDataList.add(i);
         }
         return endDataList;
     }
 
     //saved instances of steps from different days of week
-    private void savedInstanceSteps(int numSteps){
+    private void savedInstanceSteps(int numSteps) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(getDateString.equals("Mon")||getDateString.equals("пн"))
-            editor.putInt(APP_MONDAY_STEP,numSteps);
-        if(getDateString.equals("Tue")||getDateString.equals("вт"))
-            editor.putInt(APP_TUESDAY_STEP,numSteps);
-        if(getDateString.equals("Wed")||getDateString.equals("ср"))
-            editor.putInt(APP_WEDNESDAY_STEP,numSteps);
-        if(getDateString.equals("Thu")||getDateString.equals("чт"))
-            editor.putInt(APP_THURSDAY_STEP,numSteps);
-        if(getDateString.equals("Fri")||getDateString.equals("пт"))
-            editor.putInt(APP_FRIDAY_STEP,numSteps);
-        if(getDateString.equals("Sat")||getDateString.equals("сб"))
-            editor.putInt(APP_SATURDAY_STEP,numSteps);
-        if(getDateString.equals("Sun")||getDateString.equals("вс"))
-            editor.putInt(APP_SUNDAY_STEP,numSteps);
+        if (getDateString.equals("Mon") || getDateString.equals("пн"))
+            editor.putInt(APP_MONDAY_STEP, numSteps);
+        if (getDateString.equals("Tue") || getDateString.equals("вт"))
+            editor.putInt(APP_TUESDAY_STEP, numSteps);
+        if (getDateString.equals("Wed") || getDateString.equals("ср"))
+            editor.putInt(APP_WEDNESDAY_STEP, numSteps);
+        if (getDateString.equals("Thu") || getDateString.equals("чт"))
+            editor.putInt(APP_THURSDAY_STEP, numSteps);
+        if (getDateString.equals("Fri") || getDateString.equals("пт"))
+            editor.putInt(APP_FRIDAY_STEP, numSteps);
+        if (getDateString.equals("Sat") || getDateString.equals("сб"))
+            editor.putInt(APP_SATURDAY_STEP, numSteps);
+        if (getDateString.equals("Sun") || getDateString.equals("вс"))
+            editor.putInt(APP_SUNDAY_STEP, numSteps);
         editor.apply();
     }
 
     //load instances of steps from different days of week
-    private int loadInstanceSteps(String APP_PREFERENCES){
+    private int loadInstanceSteps(String APP_PREFERENCES) {
         if (sharedPreferences.contains(APP_PREFERENCES)) {
             return sharedPreferences.getInt(APP_PREFERENCES, 0);
         }
@@ -306,26 +308,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     //Setting of numSteps
-    private void setNumStepsVariable(){
-        if(getDateString.equals("Mon")||getDateString.equals("пн"))
+    private void setNumStepsVariable() {
+        if (getDateString.equals("Mon") || getDateString.equals("пн"))
             numSteps = loadInstanceSteps(APP_MONDAY_STEP);
-        if(getDateString.equals("Tue")||getDateString.equals("вт"))
+        if (getDateString.equals("Tue") || getDateString.equals("вт"))
             numSteps = loadInstanceSteps(APP_TUESDAY_STEP);
-        if(getDateString.equals("Wed")||getDateString.equals("ср"))
+        if (getDateString.equals("Wed") || getDateString.equals("ср"))
             numSteps = loadInstanceSteps(APP_WEDNESDAY_STEP);
-        if(getDateString.equals("Thu")||getDateString.equals("чт"))
+        if (getDateString.equals("Thu") || getDateString.equals("чт"))
             numSteps = loadInstanceSteps(APP_THURSDAY_STEP);
-        if(getDateString.equals("Fri")||getDateString.equals("пт"))
+        if (getDateString.equals("Fri") || getDateString.equals("пт"))
             numSteps = loadInstanceSteps(APP_FRIDAY_STEP);
-        if(getDateString.equals("Sat")||getDateString.equals("сб"))
+        if (getDateString.equals("Sat") || getDateString.equals("сб"))
             numSteps = loadInstanceSteps(APP_SATURDAY_STEP);
-        if(getDateString.equals("Sun")||getDateString.equals("вс"))
+        if (getDateString.equals("Sun") || getDateString.equals("вс"))
             numSteps = loadInstanceSteps(APP_SUNDAY_STEP);
     }
 
     //Reset button
     public void resetNumStepsVariable(View view) {
-        numSteps=0;
+        numSteps = 0;
         steps.setText("0 steps");
     }
 }

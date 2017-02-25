@@ -1,4 +1,4 @@
-package com.stepgo.android.stepgo.music;
+package com.stepgo.android.stepgo.adapters;
 
 /**
  * Created by User on 04.04.2016.
@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stepgo.android.stepgo.R;
+import com.stepgo.android.stepgo.views.MusicActivity;
+import com.stepgo.android.stepgo.pojo.Song;
 
 import java.util.ArrayList;
 
@@ -21,9 +23,9 @@ public class SongAdapter extends android.widget.BaseAdapter {
     private ArrayList<Song> songs;
     private LayoutInflater songInf;
 
-    public SongAdapter(Context c, ArrayList<Song> theSongs){
-        songs=theSongs;
-        songInf=LayoutInflater.from(c);
+    public SongAdapter(Context c, ArrayList<Song> theSongs) {
+        songs = theSongs;
+        songInf = LayoutInflater.from(c);
     }
 
     @Override
@@ -47,12 +49,12 @@ public class SongAdapter extends android.widget.BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //map to song layout
-        LinearLayout songLay = (LinearLayout)songInf.inflate
+        LinearLayout songLay = (LinearLayout) songInf.inflate
                 (R.layout.song_list, parent, false);
 
         //get title and artist views
-        TextView songView = (TextView)songLay.findViewById(R.id.song_title);
-        TextView artistView = (TextView)songLay.findViewById(R.id.song_artist);
+        TextView songView = (TextView) songLay.findViewById(R.id.song_title);
+        TextView artistView = (TextView) songLay.findViewById(R.id.song_artist);
         //get song using position
         Song currSong = songs.get(position);
         //get title and artist strings
