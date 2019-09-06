@@ -4,11 +4,8 @@ import android.content.Context
 import android.provider.MediaStore
 import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.domain.repositories.SongRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class SongRepositoryImpl @Inject constructor(private val appContext: Context) : SongRepository {
+class SongRepositoryImpl (private val appContext: Context) : SongRepository {
 
     override fun getSongs(): List<Song> {
         val files = mutableListOf<Song>()

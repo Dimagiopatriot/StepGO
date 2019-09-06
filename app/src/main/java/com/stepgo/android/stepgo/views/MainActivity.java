@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity
         isAppClosed = false;
         isMusicActivityExist = false;
         dataArray = new int[7];
-        steps = (TextView) findViewById(R.id.textView3);
-        percent = (TextView) findViewById(R.id.textView);
+        steps = (TextView) findViewById(R.id.stepCounter);
+        percent = (TextView) findViewById(R.id.percentProgress);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        motivationSpeech = (TextView) findViewById(R.id.textView4);
+        motivationSpeech = (TextView) findViewById(R.id.status);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
