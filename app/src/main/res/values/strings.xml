@@ -22,4 +22,10 @@
     <string name="such_sportsman">Such a sportsman! Do it again!</string>
     <string name="full_of_health">I can`t believe it! You are a full of health.</string>
     <string name="monster">MONSTER!!!</string>
+
+    <string-array name="stepStat">
+        <item>1 week</item>
+        <item>1 month</item>
+        <item>1 year</item>
+    </string-array>
 </resources>

@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.stepgo.android.stepgo.data.entities.Step
 
-@Database(entities = [Step::class], version = 8)
+@Database(entities = [Step::class], version = 9)
 abstract class StepGoDatabase : RoomDatabase() {
     companion object {
         private const val dbName = "step_go.db"

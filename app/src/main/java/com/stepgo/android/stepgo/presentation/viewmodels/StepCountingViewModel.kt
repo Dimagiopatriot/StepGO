@@ -13,19 +13,16 @@ import com.stepgo.android.stepgo.domain.usecases.mainscreen.GetStatusStringIdUse
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.InitStepsUseCase
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.SaveStepsToDbUseCase
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.StepSensorChangedUseCase
-import java.text.SimpleDateFormat
-import java.util.*
 
 class StepCountingViewModel(private val application: Application,
                             private val initSteps: InitStepsUseCase,
                             private val sensorChanged: StepSensorChangedUseCase,
                             private val saveSteps: SaveStepsToDbUseCase,
-                            private val status: GetStatusStringIdUseCase) : ViewModel(), SensorEventListener {
-    private val normalSteps = 10000
-    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                            private val status: GetStatusStringIdUseCase
+) : ViewModel(), SensorEventListener {
 
     val steps: MutableLiveData<Step> by lazy {
-        initSteps.init(sdf)
+        initSteps.init(SDF)
     }
 
     fun registerSensorListener() {
@@ -35,10 +32,10 @@ class StepCountingViewModel(private val application: Application,
     }
 
     fun saveStepsToDb() {
-        saveSteps.saveStepsToDb(steps, sdf)
+        saveSteps.saveStepsToDb(steps, SDF)
     }
 
-    fun getProgress(): Int = (steps.value!!.stepCount * 100 / normalSteps)
+    fun getProgress(): Int = (steps.value!!.stepCount * 100 / NORMAL_STEPS)
 
     fun getPercentProgressString(): String = "${getProgress()} %"
 
@@ -46,7 +43,7 @@ class StepCountingViewModel(private val application: Application,
 
     override fun onSensorChanged(event: SensorEvent?) {
         val eventValue = event!!.values[0].toInt()
-        sensorChanged.onStepChanged(eventValue, steps, sdf)
+        sensorChanged.onStepChanged(eventValue, steps, SDF)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}

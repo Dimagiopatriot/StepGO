@@ -15,7 +15,7 @@ class InitStepsUseCase(private val stepDao: StepDao) {
         var stepsFromDB: Step? = null
         runBlocking(Dispatchers.Default) {
             launch {
-                stepsFromDB = stepDao.findStepStatistic(sdf.format(Date()))
+                stepsFromDB = stepDao.findStep(sdf.format(Date()))
             }
         }
         return if (stepsFromDB != null) {

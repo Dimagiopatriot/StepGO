@@ -17,7 +17,7 @@ class SaveStepsToDbUseCase(private val stepDao: StepDao) {
     fun saveStepsToDb(steps: MutableLiveData<Step>, sdf: SimpleDateFormat) {
         runBlocking(Dispatchers.Default) {
             launch {
-                val stepsFromDB = stepDao.findStepStatistic(sdf.format(Date()))
+                val stepsFromDB = stepDao.findStep(sdf.format(Date()))
                 if (stepsFromDB != null) {
                     stepDao.updateStepStatistic(stepsFromDB.apply { stepCount = steps.value!!.stepCount })
                     Log.d(logTag, "Steps successfully updated!")
