@@ -9,12 +9,12 @@ import com.stepgo.android.stepgo.data.entities.Step
 @Dao
 interface StepDao {
 
-    @Query("SELECT * from step WHERE stepCount = :timestamp")
+    @Query("SELECT * from step WHERE timestamp LIKE :timestamp LIMIT 1")
     fun findStepStatistic(timestamp: String): Step?
 
     @Update
     fun updateStepStatistic(step: Step)
 
     @Insert
-    fun insertStepStatistic(step: Step)
+    fun insertStepStatistic(step: Step): Long
 }
