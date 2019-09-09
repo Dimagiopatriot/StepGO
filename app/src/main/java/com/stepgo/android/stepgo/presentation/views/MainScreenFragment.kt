@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.stepgo.android.stepgo.R
-import com.stepgo.android.stepgo.domain.viewmodels.StepCountingViewModel
+import com.stepgo.android.stepgo.presentation.viewmodels.StepCountingViewModel
 import org.koin.android.ext.android.inject
 
 class MainScreenFragment : Fragment() {
