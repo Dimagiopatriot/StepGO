@@ -3,6 +3,7 @@ package com.stepgo.android.stepgo.presentation.views
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.FragmentManager
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -14,6 +15,7 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     private lateinit var fragmentManager: FragmentManager
     private lateinit var navigationView: NavigationView
+    private lateinit var drawer: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawer = findViewById(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.setDrawerListener(toggle)
@@ -46,6 +48,7 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+        drawer.closeDrawer(GravityCompat.START)
         return true
     }
 }
