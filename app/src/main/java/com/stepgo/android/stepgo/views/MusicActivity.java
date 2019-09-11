@@ -43,7 +43,7 @@ public class MusicActivity extends AppCompatActivity implements MediaPlayerContr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music);
+        setContentView(R.layout.music_layout);
 
         songView = (ListView) findViewById(R.id.song_list);
         songList = new ArrayList<>();
