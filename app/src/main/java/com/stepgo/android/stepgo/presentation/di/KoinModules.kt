@@ -44,7 +44,7 @@ val useCasesModule = module {
     factory { StepSensorChangedUseCase() }
     factory { GetStepsFromDbUseCase(stepDao = get()) }
     factory { MapPositionToDateUseCase() }
-    factory { MapStepsUseCase() }
+    factory { MapStepsUseCase(context = androidApplication()) }
 }
 
 val dbModule = module {

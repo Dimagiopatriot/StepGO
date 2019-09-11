@@ -8,8 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.presentation.viewmodels.StatisticViewModel
+import com.stepgo.android.stepgo.presentation.views.formatters.DateAxisValueFormatter
+import com.stepgo.android.stepgo.presentation.views.formatters.StepFormatter
 import org.koin.android.ext.android.inject
 
 class StatisticFragment : Fragment() {
@@ -23,10 +27,42 @@ class StatisticFragment : Fragment() {
 
         val chart = view.findViewById<BarChart>(R.id.bar_view)
 
+        chart.setDrawBarShadow(false)
+        chart.setDrawValueAboveBar(true)
+        chart.description.isEnabled = false
+        chart.setDrawGridBackground(false)
+
+
+        xAxisSetup(chart)
+        yAxisSetup(chart)
+
         statisticViewModel.barData.observe(this, Observer {
             chart.data = it
+            chart.invalidate()
         })
 
         return view
+    }
+
+    private fun xAxisSetup(chart: BarChart) {
+        val xAxisFormatter = DateAxisValueFormatter(chart)
+        val xAxis = chart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+        xAxis.labelCount = 7
+        xAxis.valueFormatter = xAxisFormatter
+    }
+
+    private fun yAxisSetup(chart: BarChart) {
+        val leftAxis = chart.axisLeft
+        leftAxis.setLabelCount(8, false)
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+        leftAxis.spaceTop = 15f
+        leftAxis.axisMinimum = 0f
+        leftAxis.valueFormatter = StepFormatter()
+
+        val rightAxis = chart.axisRight
+        rightAxis.isEnabled = false
     }
 }
