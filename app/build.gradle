@@ -42,6 +42,7 @@ dependencies {
     kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.Orfium:RxMusicPlayer-android:1.1.0'
 }
 repositories {
     mavenCentral()
