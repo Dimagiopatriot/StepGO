@@ -40,7 +40,7 @@ val viewModelsModule = module {
 }
 
 val repositoriesModule = module {
-    single { SongRepositoryImpl(appContext = androidApplication()) }
+    single<SongRepository> { SongRepositoryImpl(appContext = androidApplication()) }
 }
 
 val useCasesModule = module {

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.data.entities.Song
 
@@ -30,11 +29,9 @@ class SongListAdapter: RecyclerView.Adapter<SongViewHolder>() {
         val currentSong = songList[position]
         holder.songArtist.text = currentSong.artist
         holder.songTitle.text = currentSong.title
-        Picasso.get()
-                .load(currentSong.imageUri)
-                .placeholder(R.drawable.ic_image_placeholder)
-                .error(R.drawable.ic_image_placeholder)
-                .into(holder.songPic)
+        currentSong.image?.let {
+            holder.songPic.setImageBitmap(it)
+        } ?: holder.songPic.setImageResource(R.drawable.ic_image_placeholder)
     }
 }
 
