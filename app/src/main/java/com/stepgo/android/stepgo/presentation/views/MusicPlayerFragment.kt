@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.orfium.rx.musicplayer.RxMusicPlayer
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.presentation.viewmodels.MusicPlayerViewModel
 import com.stepgo.android.stepgo.presentation.views.adapters.SongListAdapter
@@ -20,10 +21,12 @@ class MusicPlayerFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.music_layout, null)
         val songListAdapter = SongListAdapter()
+        RxMusicPlayer.start(activity!!.applicationContext)
 
         val songListRecyclerView = view.findViewById<RecyclerView>(R.id.song_list)
         songListRecyclerView.layoutManager = LinearLayoutManager(activity)
         songListRecyclerView.adapter = songListAdapter
+
 
         viewModel.getSongs().observe(this, Observer {
             songListAdapter.addItems(it!!)

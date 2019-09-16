@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import com.orfium.rx.musicplayer.common.isPlaying
+import com.orfium.rx.musicplayer.common.playStop
+import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.R
-import com.stepgo.android.stepgo.data.entities.Song
+import com.stepgo.android.stepgo.toBitmap
 
-class SongListAdapter: RecyclerView.Adapter<SongViewHolder>() {
+class SongListAdapter : RecyclerView.Adapter<SongViewHolder>() {
 
-    private val songList: MutableList<Song> = arrayListOf()
+    private val songList: MutableList<Media> = arrayListOf()
 
-    fun addItems(items: List<Song>) {
+    fun addItems(items: List<Media>) {
         songList.addAll(items)
         notifyDataSetChanged()
     }
@@ -26,26 +30,25 @@ class SongListAdapter: RecyclerView.Adapter<SongViewHolder>() {
     override fun getItemCount(): Int = songList.size
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        val currentSong = songList[position]
-        holder.songArtist.text = currentSong.artist
-        holder.songTitle.text = currentSong.title
-        currentSong.image?.let {
-            holder.songPic.setImageBitmap(it)
-        } ?: holder.songPic.setImageResource(R.drawable.ic_image_placeholder)
+        holder.bind(songList[position])
     }
 }
 
-class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val songPic: ImageView = itemView.findViewById(R.id.song_image)
-    val songArtist: TextView = itemView.findViewById(R.id.song_artist)
-    val songTitle: TextView = itemView.findViewById(R.id.song_title)
+    private val songPic: ImageView = itemView.findViewById(R.id.song_image)
+    private val songArtist: TextView = itemView.findViewById(R.id.song_artist)
+    private val songTitle: TextView = itemView.findViewById(R.id.song_title)
+    private val songLayout: LinearLayout = itemView.findViewById(R.id.song_layout)
+    private val songState: ImageView = itemView.findViewById(R.id.song_state)
 
-    init {
-        itemView.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun bind(song: Media) {
+        songArtist.text = song.artist
+        songTitle.text = song.title
+        song.image?.let {
+            songPic.setImageBitmap(it.toBitmap())
+        } ?: songPic.setImageResource(R.drawable.ic_image_placeholder)
+        songState.setImageResource(if (song.isPlaying()) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play)
+        songLayout.setOnClickListener { song.playStop() }
     }
 }

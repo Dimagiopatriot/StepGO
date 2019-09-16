@@ -1,11 +1,11 @@
 package com.stepgo.android.stepgo.data.repositories
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.domain.repositories.SongRepository
+import com.stepgo.android.stepgo.toBitmap
 
 class SongRepositoryImpl(private val appContext: Context) : SongRepository {
 
@@ -38,9 +38,7 @@ class SongRepositoryImpl(private val appContext: Context) : SongRepository {
                                 id = cursor.getLong(id),
                                 title = cursor.getString(title),
                                 artist = cursor.getString(artist),
-                                image = picBytes?.let {
-                                    BitmapFactory.decodeByteArray(it, 0, it.size)
-                                }
+                                image = picBytes?.toBitmap()
                         )
                 )
             } while (cursor.moveToNext())

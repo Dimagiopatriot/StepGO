@@ -13,6 +13,8 @@ import com.stepgo.android.stepgo.domain.usecases.mainscreen.GetStatusStringIdUse
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.InitStepsUseCase
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.SaveStepsToDbUseCase
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.StepSensorChangedUseCase
+import com.stepgo.android.stepgo.NORMAL_STEPS
+import com.stepgo.android.stepgo.SDF
 
 class StepCountingViewModel(private val application: Application,
                             private val initSteps: InitStepsUseCase,

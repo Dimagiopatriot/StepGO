@@ -8,7 +8,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.data.entities.Step
 import com.stepgo.android.stepgo.domain.usecases.getDayDifference
-import com.stepgo.android.stepgo.presentation.viewmodels.SDF
+import com.stepgo.android.stepgo.SDF
 import java.text.SimpleDateFormat
 import java.util.*
 

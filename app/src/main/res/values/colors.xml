@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorText">#9B9A9B</color>
     <color name="colorBackground">#F6F6F6</color>
+    <color name="colorMediaPlayBackground">#CCFF90</color>
 </resources>
