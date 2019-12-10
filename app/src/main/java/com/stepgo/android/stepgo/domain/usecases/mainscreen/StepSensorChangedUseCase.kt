@@ -1,6 +1,6 @@
 package com.stepgo.android.stepgo.domain.usecases.mainscreen
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.stepgo.android.stepgo.data.entities.Step
 import java.text.SimpleDateFormat
 import java.util.*

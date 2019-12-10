@@ -1,14 +1,15 @@
 package com.stepgo.android.stepgo.presentation.views
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.stepgo.android.stepgo.R
+import com.stepgo.android.stepgo.data.entities.Step
 import com.stepgo.android.stepgo.presentation.viewmodels.StepCountingViewModel
 import org.koin.android.ext.android.inject
 
@@ -27,7 +28,7 @@ class MainScreenFragment : Fragment() {
 
         //viewModel = ViewModelProviders.of(this)[StepCountingViewModel::class.java]
         viewModel.registerSensorListener()
-        viewModel.steps.observe(this, Observer {
+        viewModel.steps.observe(this, Observer<Step> {
             stepText.text = "${it?.stepCount} steps"
             percentProgress.text = viewModel.getPercentProgressString()
             progressBar.progress = viewModel.getProgress()

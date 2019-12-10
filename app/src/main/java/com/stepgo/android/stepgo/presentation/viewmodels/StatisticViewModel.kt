@@ -1,9 +1,9 @@
 package com.stepgo.android.stepgo.presentation.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.view.View
 import android.widget.AdapterView
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.github.mikephil.charting.data.BarData
 import com.stepgo.android.stepgo.domain.usecases.statistic.GetStepsFromDbUseCase
 import com.stepgo.android.stepgo.domain.usecases.statistic.MapPositionToDateUseCase

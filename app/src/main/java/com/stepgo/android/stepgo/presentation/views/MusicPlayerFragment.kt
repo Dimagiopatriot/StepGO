@@ -1,13 +1,13 @@
 package com.stepgo.android.stepgo.presentation.views
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.orfium.rx.musicplayer.RxMusicPlayer
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.presentation.viewmodels.MusicPlayerViewModel

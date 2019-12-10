@@ -1,12 +1,12 @@
 package com.stepgo.android.stepgo.presentation.views.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.orfium.rx.musicplayer.common.isPlaying
 import com.orfium.rx.musicplayer.common.playStop
 import com.orfium.rx.musicplayer.media.Media

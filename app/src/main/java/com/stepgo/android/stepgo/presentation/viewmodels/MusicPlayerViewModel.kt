@@ -1,7 +1,7 @@
 package com.stepgo.android.stepgo.presentation.viewmodels
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.domain.usecases.music.GetMusicUseCase
 

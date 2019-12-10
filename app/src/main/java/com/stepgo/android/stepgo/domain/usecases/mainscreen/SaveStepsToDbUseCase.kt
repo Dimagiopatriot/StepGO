@@ -1,7 +1,7 @@
 package com.stepgo.android.stepgo.domain.usecases.mainscreen
 
-import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.stepgo.android.stepgo.data.db.StepDao
 import com.stepgo.android.stepgo.data.entities.Step
 import kotlinx.coroutines.Dispatchers

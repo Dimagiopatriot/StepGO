@@ -1,13 +1,13 @@
 package com.stepgo.android.stepgo.presentation.viewmodels
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.stepgo.android.stepgo.data.entities.Step
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.GetStatusStringIdUseCase
 import com.stepgo.android.stepgo.domain.usecases.mainscreen.InitStepsUseCase

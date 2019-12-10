@@ -1,7 +1,7 @@
 package com.stepgo.android.stepgo.domain.usecases.music
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.decodeToString
