@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +33,7 @@ class MusicPlayerFragment : Fragment() {
         RxMusicPlayer.start(activity!!.applicationContext)
 
         val songListRecyclerView = view.findViewById<RecyclerView>(R.id.song_list)
+        val progressBar = view.findViewById<ProgressBar>(R.id.music_load)
         songListRecyclerView.layoutManager = LinearLayoutManager(activity)
         songListRecyclerView.adapter = songListAdapter
 
@@ -41,6 +43,7 @@ class MusicPlayerFragment : Fragment() {
 
         viewModel.mediaListLiveData.observe(this, Observer {
             songListAdapter.addItems(it!!)
+            progressBar.visibility = View.GONE
         })
 
         disposable.add(

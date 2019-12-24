@@ -36,7 +36,6 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.container, MainScreenFragment(), null)
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
