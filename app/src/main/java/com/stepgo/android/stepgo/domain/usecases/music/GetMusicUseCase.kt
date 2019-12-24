@@ -1,7 +1,5 @@
 package com.stepgo.android.stepgo.domain.usecases.music
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.decodeToString
@@ -9,16 +7,9 @@ import com.stepgo.android.stepgo.domain.repositories.SongRepository
 
 class GetMusicUseCase(private val songRepository: SongRepository) {
 
-    val songList by lazy {
-        val liveDataSongList = MutableLiveData<List<Song>>()
-        liveDataSongList.value = songRepository.getSongs()
-        liveDataSongList
-    }
-
-    val mediaList = MutableLiveData<List<Media>>()
-
-    fun mapToMedia(songs: LiveData<List<Song>>) {
-        mediaList.value = songs.value?.map {
+    fun mapToMedia(songs: List<Song>): List<Media> {
+        val mediaList = mutableListOf<Media>()
+        val mappedSongs = songs.map {
             Media(
                     id = it.id.toInt(),
                     image = it.image?.decodeToString(),
@@ -26,5 +17,9 @@ class GetMusicUseCase(private val songRepository: SongRepository) {
                     artist = it.artist
             )
         }
+        mediaList.addAll(mappedSongs)
+        return mediaList
     }
+
+    fun getStorageSongs() = songRepository.getSongs()
 }

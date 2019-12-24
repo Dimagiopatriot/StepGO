@@ -52,4 +52,11 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        val currentFragment = fragmentManager.findFragmentById(R.id.container)
+        if (currentFragment is MusicPlayerFragment) {
+            currentFragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
 }
