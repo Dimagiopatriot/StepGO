@@ -4,6 +4,8 @@ import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.decodeToString
 import com.stepgo.android.stepgo.domain.repositories.SongRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 class GetMusicUseCase(private val songRepository: SongRepository) {
 
@@ -14,12 +16,19 @@ class GetMusicUseCase(private val songRepository: SongRepository) {
                     id = it.id.toInt(),
                     image = it.image?.decodeToString(),
                     title = it.title,
-                    artist = it.artist
+                    artist = it.artist,
+                    streamUrl = it.uri
             )
         }
         mediaList.addAll(mappedSongs)
         return mediaList
     }
 
-    fun getStorageSongs() = songRepository.getSongs()
+    fun getStorageSongs(): List<Song> {
+        val result = mutableListOf<Song>()
+        runBlocking(Dispatchers.IO) {
+            result.addAll(songRepository.getSongs())
+        }
+        return result
+    }
 }

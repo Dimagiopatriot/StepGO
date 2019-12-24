@@ -40,6 +40,7 @@ class SongRepositoryImpl(private val appContext: Context) : SongRepository {
                                     id = cursor.getLong(id),
                                     title = cursor.getString(title),
                                     artist = cursor.getString(artist),
+                                    uri = cursor.getString(fileUri),
                                     image = picBytes?.toBitmap()
                             )
                     )

@@ -5,5 +5,6 @@ import android.graphics.Bitmap
 data class Song(val id: Long,
                 val title: String,
                 val artist: String,
+                val uri: String,
                 val image: Bitmap?
 )

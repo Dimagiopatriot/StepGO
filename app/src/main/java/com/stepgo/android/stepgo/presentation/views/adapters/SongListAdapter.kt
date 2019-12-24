@@ -1,5 +1,6 @@
 package com.stepgo.android.stepgo.presentation.views.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,17 @@ class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         song.image?.let {
             songPic.setImageBitmap(it.toBitmap())
         } ?: songPic.setImageResource(R.drawable.ic_image_placeholder)
-        songState.setImageResource(if (song.isPlaying()) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play)
+        updateItem(song)
         songLayout.setOnClickListener { song.playStop() }
+    }
+
+    fun updateItem(song: Media) {
+        if (song.isPlaying()){
+            songState.setImageResource(android.R.drawable.ic_media_pause)
+            songLayout.setBackgroundColor(Color.parseColor("#CCFF90"))
+        }  else {
+            songState.setImageResource(android.R.drawable.ic_media_play)
+            songLayout.setBackgroundColor(Color.WHITE)
+        }
     }
 }
