@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -26,14 +27,18 @@ class MusicPlayerFragment : Fragment() {
 
     private val viewModel by inject<MusicPlayerViewModel>()
     private val disposable = CompositeDisposable()
+    private lateinit var errorMessage: LinearLayout
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.music_layout, null)
         val songListAdapter = SongListAdapter()
         RxMusicPlayer.start(activity!!.applicationContext)
 
+        progressBar = view.findViewById(R.id.music_load)
+        errorMessage = view.findViewById(R.id.error_message)
+
         val songListRecyclerView = view.findViewById<RecyclerView>(R.id.song_list)
-        val progressBar = view.findViewById<ProgressBar>(R.id.music_load)
         songListRecyclerView.layoutManager = LinearLayoutManager(activity)
         songListRecyclerView.adapter = songListAdapter
 
@@ -44,32 +49,20 @@ class MusicPlayerFragment : Fragment() {
         viewModel.mediaListLiveData.observe(this, Observer {
             songListAdapter.addItems(it!!)
             progressBar.visibility = View.GONE
+
+            if (it.isEmpty()) {
+                errorMessage.visibility = View.VISIBLE
+            } else {
+                errorMessage.visibility = View.GONE
+            }
         })
 
         disposable.add(
                 RxMusicPlayer.state
                         .distinctUntilChanged()
                         .subscribe { state ->
-                            when (state) {
-                                is PlaybackState.Buffering -> {
-                                    Log.d("PlaybackState Buffering", state.media?.toString())
-                                    songListAdapter.notifyDataSetChanged()
-                                }
-                                is PlaybackState.Playing -> {
-                                    Log.d("PlaybackState Playing", state.media?.toString())
-                                    songListAdapter.notifyDataSetChanged()
-                                }
-                                is PlaybackState.Paused -> {
-                                    Log.d("PlaybackState Paused", state.media?.toString())
-                                    songListAdapter.notifyDataSetChanged()
-                                }
-                                is PlaybackState.Completed -> {
-                                    Log.d("PlaybackState Completed", state.media?.toString())
-                                    songListAdapter.notifyDataSetChanged()
-                                }
-                                is PlaybackState.Stopped -> {
-                                    // At this state MediaService gets destroyed, so RxMusicPlayer.start needs to be called again
-                                }
+                            if (state != PlaybackState.Stopped) {
+                                songListAdapter.notifyDataSetChanged()
                             }
                         }
         )
@@ -88,7 +81,8 @@ class MusicPlayerFragment : Fragment() {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 viewModel.mediaListLiveData.value = viewModel.getSongs()
             } else {
-                //todo on else
+                progressBar.visibility = View.GONE
+                errorMessage.visibility = View.VISIBLE
             }
         }
     }

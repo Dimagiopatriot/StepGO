@@ -15,7 +15,7 @@ class SaveStepsToDbUseCase(private val stepDao: StepDao) {
     private val logTag = "SaveSteps"
 
     fun saveStepsToDb(steps: MutableLiveData<Step>, sdf: SimpleDateFormat) {
-        runBlocking(Dispatchers.Default) {
+        runBlocking(Dispatchers.IO) {
             launch {
                 val stepsFromDB = stepDao.findStep(sdf.format(Date()))
                 if (stepsFromDB != null) {
