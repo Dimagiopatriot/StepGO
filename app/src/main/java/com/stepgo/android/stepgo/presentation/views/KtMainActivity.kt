@@ -40,15 +40,14 @@ class KtMainActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        drawer.closeDrawer(GravityCompat.START)
         val fragmentTransaction = fragmentManager.beginTransaction()
         when(menuItem.itemId) {
             R.id.nav_walking -> fragmentTransaction.replace(R.id.container, MainScreenFragment(), null)
             R.id.nav_statistic -> fragmentTransaction.replace(R.id.container, StatisticFragment(), null)
             R.id.nav_music -> fragmentTransaction.replace(R.id.container, MusicPlayerFragment(), null)
         }
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-        drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
