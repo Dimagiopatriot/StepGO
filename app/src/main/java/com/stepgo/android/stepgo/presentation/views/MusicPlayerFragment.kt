@@ -15,7 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orfium.rx.musicplayer.RxMusicPlayer
+import com.orfium.rx.musicplayer.common.Action
 import com.orfium.rx.musicplayer.common.PlaybackState
+import com.orfium.rx.musicplayer.common.addQueue
+import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.R
 import com.stepgo.android.stepgo.STORAGE_PERMISSION_REQUEST_CODE
 import com.stepgo.android.stepgo.presentation.viewmodels.MusicPlayerViewModel
@@ -26,14 +29,12 @@ import org.koin.android.ext.android.inject
 class MusicPlayerFragment : Fragment() {
 
     private val viewModel by inject<MusicPlayerViewModel>()
-    private val disposable = CompositeDisposable()
     private lateinit var errorMessage: LinearLayout
     private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.music_layout, null)
         val songListAdapter = SongListAdapter()
-        RxMusicPlayer.start(activity!!.applicationContext)
 
         progressBar = view.findViewById(R.id.music_load)
         errorMessage = view.findViewById(R.id.error_message)
@@ -46,33 +47,17 @@ class MusicPlayerFragment : Fragment() {
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION_REQUEST_CODE)
 
-        viewModel.mediaListLiveData.observe(this, Observer {
-            songListAdapter.addItems(it!!)
+        viewModel.mediaListLiveData.observe(this, Observer { songs ->
+            songListAdapter.addItems(songs!!)
             progressBar.visibility = View.GONE
 
-            if (it.isEmpty()) {
+            if (songs.isEmpty()) {
                 errorMessage.visibility = View.VISIBLE
             } else {
                 errorMessage.visibility = View.GONE
             }
         })
-
-        disposable.add(
-                RxMusicPlayer.state
-                        .distinctUntilChanged()
-                        .subscribe { state ->
-                            if (state != PlaybackState.Stopped) {
-                                songListAdapter.notifyDataSetChanged()
-                            }
-                        }
-        )
-
         return view
-    }
-
-    override fun onDestroy() {
-        disposable.clear()
-        super.onDestroy()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

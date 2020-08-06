@@ -14,8 +14,6 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
-import java.util.Random;
-
 import android.app.PendingIntent;
 
 import com.stepgo.android.stepgo.views.MusicActivity;
@@ -27,12 +25,6 @@ import com.stepgo.android.stepgo.pojo.Song;
 public class MusicService extends Service implements
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener {
-
-    private String songTitle = "";
-    private static final int NOTIFY_ID = 1;
-
-    private boolean shuffle = false;
-    private Random rand;
 
     private final IBinder musicBind = new MusicBinder();
     //media player
@@ -74,7 +66,7 @@ public class MusicService extends Service implements
         mp.start();
         Intent notIntent = new Intent(this, MusicActivity.class);
         notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendInt = PendingIntent.getActivity(this, 0,
+        PendingIntent.getActivity(this, 0,
                 notIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
     }
@@ -86,7 +78,6 @@ public class MusicService extends Service implements
         songPosn = 0;
         //create player
         player = new MediaPlayer();
-        rand = new Random();
         initMusicPlayer();
     }
 
@@ -120,7 +111,6 @@ public class MusicService extends Service implements
         MusicActivity.returnMusicView(songPosn - 1);
         //get song
         Song playSong = songs.get(songPosn);
-        songTitle = playSong.getTitle();
         MusicActivity.updateMusicView(songPosn);
         //get id
         long currSong = playSong.getID();
@@ -176,16 +166,9 @@ public class MusicService extends Service implements
 
     //skip to next
     public void playNext() {
-        if (shuffle) {
-            int newSong = songPosn;
-            while (newSong == songPosn) {
-                newSong = rand.nextInt(songs.size());
-            }
-            songPosn = newSong;
-        } else {
-            songPosn++;
-            if (songPosn >= songs.size()) songPosn = 0;
-        }
+        songPosn++;
+        if (songPosn >= songs.size())
+            songPosn = 0;
         playSong();
     }
 
@@ -193,5 +176,5 @@ public class MusicService extends Service implements
     public void onDestroy() {
         stopForeground(true);
     }
-    
+
 }

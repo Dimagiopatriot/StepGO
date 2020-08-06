@@ -31,6 +31,7 @@ class SongRepositoryImpl(private val appContext: Context) : SongRepository {
                 val title = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
                 val artist = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
                 val fileUri = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
+                val duration = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
 
                 do {
                     mmr.setDataSource(cursor.getString(fileUri))
@@ -41,6 +42,7 @@ class SongRepositoryImpl(private val appContext: Context) : SongRepository {
                                     title = cursor.getString(title),
                                     artist = cursor.getString(artist),
                                     uri = cursor.getString(fileUri),
+                                    duration = cursor.getInt(duration),
                                     image = picBytes?.toBitmap()
                             )
                     )

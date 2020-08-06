@@ -12,13 +12,14 @@ import com.orfium.rx.musicplayer.common.isPlaying
 import com.orfium.rx.musicplayer.common.playStop
 import com.orfium.rx.musicplayer.media.Media
 import com.stepgo.android.stepgo.R
+import com.stepgo.android.stepgo.data.entities.Song
 import com.stepgo.android.stepgo.toBitmap
 
 class SongListAdapter : RecyclerView.Adapter<SongViewHolder>() {
 
-    private val songList: MutableList<Media> = arrayListOf()
+    private val songList: MutableList<Song> = arrayListOf()
 
-    fun addItems(items: List<Media>) {
+    fun addItems(items: List<Song>) {
         songList.addAll(items)
         notifyDataSetChanged()
     }
@@ -43,18 +44,18 @@ class SongViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val songLayout: LinearLayout = itemView.findViewById(R.id.song_layout)
     private val songState: ImageView = itemView.findViewById(R.id.song_state)
 
-    fun bind(song: Media) {
+    fun bind(song: Song) {
         songArtist.text = song.artist
         songTitle.text = song.title
         song.image?.let {
-            songPic.setImageBitmap(it.toBitmap())
+            songPic.setImageBitmap(it)
         } ?: songPic.setImageResource(R.drawable.ic_image_placeholder)
         updateItem(song)
         songLayout.setOnClickListener { song.playStop() }
     }
 
-    fun updateItem(song: Media) {
-        if (song.isPlaying()){
+    fun updateItem(song: Song) {
+        if (song.isPlaying){
             songState.setImageResource(android.R.drawable.ic_media_pause)
             songLayout.setBackgroundColor(Color.parseColor("#CCFF90"))
         }  else {
